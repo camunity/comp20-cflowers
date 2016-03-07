@@ -1,0 +1,16 @@
+#lyrics {
+	font-style: bold;
+	font-family: Impact;  
+	text-align: center;
+}
+
+#music_video {
+	display: block;
+	margin: 0 auto;
+}
+
+#title {
+	text-align: center;
+	font-weight: bold;
+	font-family: sans-serif;
+}
