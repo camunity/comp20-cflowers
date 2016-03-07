@@ -2,7 +2,9 @@ README
 
 Comp 20 Lab 5: My Old Kentucky Home
 
-Cameron Flowers March 3, 2016
+Cameron Flowers 
+
+March 3, 2016
 
 The goal of the assignment is to practice using JavaScript, 
 the Document Object Model (DOM), Event Handling and HTML5 to
