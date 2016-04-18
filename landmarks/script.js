@@ -1,7 +1,7 @@
 
 	var myLat = 42.36;
 	var myLng = -71.05;
-	var url = "https://defense-in-derpth.herokuapp.com/sendLocation";
+	var url = "https://guarded-mesa-44140.herokuapp.com/sendLocation";
 	var request = new XMLHttpRequest(); 
 	var me = new google.maps.LatLng(myLat, myLng);
 	var myOptions = {
