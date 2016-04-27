@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Report</title>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
+</head>
+<body>
+	<h1>Assignment 4 Security Report</h1>
+	<h3>by Cameron Flowers </h3>
+	<h2>Introduction:</h2>
+	<p>This is an assessment of the security of Assignment 3 developed by Ming Chow. His program is a server-side MongoDB GET/POST application that I run on localhost that supports location checkins involving user inputted login, latitude, and longitude information; and allows the client to search the database for all location checkins for a queried login name. In what follows I will assess the many security vulnerabilities that exist in this application and discuss their causes and implications. </p>
+	<h2>Methodology:</h2>
+	<p>
+		I used CURL to "black box" test Ming Chow's application while running it on localhost before reading his source code extensively and moving on to "white box" test my local copy of the application after I found a few places where security breaches could be made. 
+	</p>
+	<h2>Abstract:</h2>
+	<p>Many security flaws I found in Ming's web application were related to user/client input and could be prevented by sanatizing that input. I realized in doing this exercise how many ways bad user input can work to hack a program and create serious security threats.</p>
+	<h2>Issues Found:</h2>
+
+	<h4>Cross-Site Scripting</h4>
+	<p>Location: /sendLocation POST API</p>
+	<p>Severity: High! Ming's web application could be broken down using any combination of javascript functions due to a huge hole that allows a hacker the ability to change or manipulate the webpage byway of an insecure HTML element.</p>
+	<p>To identify this problem, I posted data using "curl" from my workstation to the server that contained  javascript embedded into the "login" field. The specific command I used was:<img src="curl.png"/></p>
+	<p>And the result was...</p>
+	<p><img src="hacked1.png"/></p>
+	<p>This issue can be resolved by checking and sanitizing user input to disallow the insertion of code that may contain css/html/javascript. This can be handled by certain NodeJS plugins or byway of changing the way html tags are encoded such that they are processed as strings "ampersand lt and ampersand gt".</p>
+
+	<h4>MongoDB Code Injection</h4>
+	<p>Location: /checkins.json GET API</p>
+	<p>Severity: Medium. I was able to have the API return user location information with the provision of a user login. I was able to pass it the parameter "ne" and the resulting server response displayed the location information of all the users. If this location information was more sensitive data, this security vulnerability has pretty huge consequences. <img src="ne.png"/> <img src="hacked2.png"/></p>
+	<p>To prevent this issue the solution would be to check URL parameters for valid input before inserting them and by removing all special characters from the parameter string.</p>
+	
+	
+	<h4>Access by any Domain Permitted with "*"</h4>
+	<p>Location: Any of the GET APIS</p>
+	<p>Severity: Medium. I thought about this issue after exploring the source code a bit more but having CORS * accessibility in the manner that Ming does would be potentially threatening if this were a live application that held important personal user data because this practically allows for any domain to have access to the resources contained in the GET and POST APIs. </p>
+	<p>The part of Ming's code I'm referring to is</p>
+	<p><img src="corsstar.png"/></p>
+	<p>It is a potential security threat to allow all websites access to these APIs and would be a better and more secure programming practice to only allow certain specified sites to access the APIs in the future.</p>
+	
+	<h2>Conclusion:</h2>
+	<p>There are many potential security threats that exist in web programming. By taking thoughtful steps as a programmer anticiapting bad user input or potential hackers, you can significantly tighten the security of this web application and guarantee more protection of your clients and their information. Adding login verification, specifying which sites have access to the API calls and sanitizing code are three huge programming decisions that can be used to tighten the security in Assignment 3. </p>
+
+</body>
+</html>
